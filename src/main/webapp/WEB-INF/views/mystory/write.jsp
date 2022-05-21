@@ -8,7 +8,7 @@
   <textarea class="form-control w-75 " style="margin: 0 auto; float: none; height:55vh; " id="mystory-content" rows="3"></textarea>
   
   
- <div class="btn btn-success float-end mt-2" style="margin-right:12%">Create</div>
+ <div class="btn btn-success float-end mt-2" style="margin-right:12%" id="mystory-create">Create</div>
 </div>
 </body>
 </html>
