@@ -22,39 +22,7 @@ public class BoardController {
 	public String myIdea() {
 		return "myIdea";
 	}
-	
-	@GetMapping("/myphoto")
-	public String myphoto() {
-		return "myphoto";
-	}
-	
-	@GetMapping("/mystory")
-	public String mystory(Model model, @PageableDefault(size=3,sort="id",direction= Sort.Direction.DESC) Pageable pageable) {
-		
-		
-		model.addAttribute("mystory",mystoryservice.readyMystory(pageable));
-		System.out.println("mystory model"+model);
-		return "mystory/mystory";
-	}
-	
-	@GetMapping("/mystory/{id}")
-	public String mystoryDetail(@PathVariable int id, Model model) {
-		model.addAttribute("mystory",mystoryservice.readyOneMystory(id));
-		return "mystory/detail";
-	}
-	
-	@GetMapping("/mystory/{id}/modify")
-	public String mystorymodify(@PathVariable int id, Model model) {
-		model.addAttribute("mystory",mystoryservice.readyOneMystory(id));
-		return "mystory/modify";
-	}
-	
-	@GetMapping("/mystory/write")
-	public String mystoryWrite() {
-		
-		return "mystory/write";
-	}
-	
+
 	@GetMapping("/myprofile")
 	public String myprofile() {
 		return "myprofile";
