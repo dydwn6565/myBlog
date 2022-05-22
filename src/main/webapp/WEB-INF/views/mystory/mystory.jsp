@@ -1,33 +1,42 @@
 
 <%@ include file="../layout/header.jsp" %>
+
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 	<div class="card">
   <div class="card-header">
-    Featured
+    My story
   </div>
-  <div class="card-body">
-    <h5 class="card-title">Diary title 1</h5>
-    <p class="card-text">Diary content 1.</p>
-    <a href="/mystory/1" class="btn btn-primary">details</a>
-  </div>
-</div>
-<div class="card">
-  <div class="card-header">
-    Featured
-  </div>
-  <div class="card-body">
-    <h5 class="card-title">Diary title 2</h5>
-    <p class="card-text">Diary content 2</p>
-    <a href="/mystory/2" class="btn btn-primary">details</a>
-  </div>
-</div><div class="card">
-  <div class="card-header">
-    Featured
-  </div>
-  <div class="card-body">
-    <h5 class="card-title">Diary title 3</h5>
-    <p class="card-text">Diary content 3.</p>
-    <a href="/mystory/3" class="btn btn-primary">details</a>
-  </div>
+<c:forEach var="MyStory" items="${mystory.content}">
+  	<div class="card m-2">
+  	<div class="card-body">
+  	
+  		<h4 class="card-title">${MyStory.title}</h4>
+  		<p class="card-text">${MyStory.content}</p>
+  		<a href="/mystory/${MyStory.id}" class="btn btn-primary">details</a>
+  	</div>
+  	 </div>
+</c:forEach>
+  <ul class="pagination justify-content-center">
+  	<c:choose>
+  		<c:when test="${mystory.first}">
+  		<li class="page-item disabled"><a class="page-link" href="?page=${mystory.number-1}">Previous</a></li>
+  		
+  		</c:when>
+  		<c:otherwise>
+  			<li class="page-item"><a class="page-link" href="?page=${mystory.number-1}">Previous</a></li>
+  		</c:otherwise>
+  	</c:choose>
+  	
+  	<c:choose>
+  	<c:when test="${mystory.last}">
+  	<li class="page-item disabled"><a class="page-link" href="?page=${mystory.number+1}">Next</a></li>
+  	
+  	</c:when>
+  	<c:otherwise>
+  	<li class="page-item"><a class="page-link" href="?page=${mystory.number+1 }">Next</a></li>
+  	</c:otherwise>
+  	</c:choose>
+  </ul>
   <a href="/mystory/write" class="btn btn-primary">write</a>
  
 </div>

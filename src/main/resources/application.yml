@@ -12,14 +12,14 @@ spring:
     username: yong
     password: yong1234
   
-  jap:
+  jpa:
     open-in-view: true
     hibernate:
       ddl-auto: update
       naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardlmpl
-      user-new-id-generator-mapping: false
-    show-sql: true
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      use-new-id-generator-mappings: false
+    show-sql: false
     properties:
       hibernate.format_sql: true
     

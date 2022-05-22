@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +21,9 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
+@Builder
 public class MyStory {
 	
 	@Id
