@@ -33,6 +33,8 @@ public class MyPhoto {
 	@Lob
 	private String content;
 	
+	private int userid;
+	
 	@CreationTimestamp
 	private Timestamp createDate;
 }

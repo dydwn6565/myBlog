@@ -29,6 +29,11 @@
 			accept="image/png ,image/jpg, image/jpeg, image/gif"
 			onchange="return fileValidation()" id="file" name="photo">
 	</div>
+	
+<!-- 	<form method="post" action="/api/myphoto/write" enctype="multipart/form-data"> -->
+<!--     <input multiple type="file" name="files"> -->
+<!--     <button>submit</button> -->
+</form>
 
 
 </div>

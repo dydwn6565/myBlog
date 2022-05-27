@@ -30,9 +30,12 @@ function previewFile() {
 
 	if (file) {
 		console.log(file.name);
+		console.log(file);
 		reader.readAsDataURL(file);
 	}
 }
+
+
 
 
  let index ={
@@ -47,13 +50,16 @@ function previewFile() {
 	writeMyphoto:function(){
 		
 		
+		const image = document.getElementById("file").files[0];
+		
+		console.log(file.name);
 		let data ={
-			photo:$("#myphoto").attr('src'),
-			content:$("#myphoto-content").val()
+			fileBase64:$("#myphoto").attr('src'),
+			content:$("#myphoto-content").val(),
+			fileName:image.name
 		}
 		 
 		 
-		console.log("type"+jQuery.type(data.photo))
 		$.ajax({
 			type:"POST",
 			url:"/api/myphoto/write",
