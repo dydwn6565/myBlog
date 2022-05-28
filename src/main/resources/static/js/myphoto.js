@@ -37,43 +37,43 @@ function previewFile() {
 
 
 
+let index = {
+	init: function() {
 
- let index ={
-	init:function(){
-		$("#myphoto-create").on("click",()=>{
-			
+//		const imagess = document.getElementById("myphoto-images").src;
+//
+//		console.log(imagess);
+
+		$("#myphoto-create").on("click", () => {
+
 			this.writeMyphoto();
-			
+
 		});
 	},
-	
-	writeMyphoto:function(){
-		
-		
+
+	writeMyphoto: function() {
+
 		const image = document.getElementById("file").files[0];
-		
-		console.log(file.name);
-		let data ={
-			fileBase64:$("#myphoto").attr('src'),
-			content:$("#myphoto-content").val(),
-			fileName:image.name
+		let data = {
+			fileBase64: $("#myphoto").attr('src'),
+			content: $("#myphoto-content").val(),
+			fileName: image.name
 		}
-		 
-		 
+		console.log("fileBase"+data.fileBase64);
+
 		$.ajax({
-			type:"POST",
-			url:"/api/myphoto/write",
+			type: "POST",
+			url: "/api/myphoto/write",
 			data: JSON.stringify(data),
-			contentType:"application/json; charset=utf-8",
-//			dataType:"json"
-		}).done(function(resp){
+			contentType: "application/json; charset=utf-8",
+			//			dataType:"json"
+		}).done(function(resp) {
 			alert("successfully writed")
-			location.href="/myphoto"
-		}).fail(function(err){
+//			location.href = "/myphoto"
+		}).fail(function(err) {
 			alert(JSON.stringify(err))
 		})
 	}
 }
-			
+
 index.init();
-		

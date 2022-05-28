@@ -59,17 +59,15 @@ public class MyphotoAPIController {
 			if (!Files.exists(Paths.get(FileSystemView.getFileSystemView().getHomeDirectory() + "/app/resources/"
 					+ Integer.toString(imageData.getId())))) {
 				pathsAsFile.mkdir();
-				
-				
-				saveImageToMyPath(fileName,imageData);
-				saveImageFileToDB(fileName,imageData);
+
+				saveImageToMyPath(fileBase64, imageData);
+				saveImageFileToDB(fileName, imageData);
 				return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 			} else {
-			
-				saveImageToMyPath(fileName,imageData);
-				saveImageFileToDB(fileName,imageData);
-				
-				
+
+				saveImageToMyPath(fileBase64, imageData);
+				saveImageFileToDB(fileName, imageData);
+
 				return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 			}
 
@@ -82,26 +80,27 @@ public class MyphotoAPIController {
 	}
 
 	public void saveImageToMyPath(String fileBase64, ImageDto imageData) throws IOException {
-		String fileName = imageData.getFileName(); 
+		String fileName = imageData.getFileName();
 
 		File file = new File(FileSystemView.getFileSystemView().getHomeDirectory() + "/app/resources/"
 				+ Integer.toString(imageData.getId()) + "/" + fileName);
 		Base64.Decoder decoder = Base64.getDecoder();
-		byte[] decodedBytes = decoder.decode(fileBase64.split(",")[1]);
 
-		
+		byte[] decodedBytes = decoder.decode(fileBase64.split(",")[1]);
+		System.out.println("decodedBytes" + decodedBytes);
+
 		try {
 			FileOutputStream fileOutputStream;
 			fileOutputStream = new FileOutputStream(file);
 			fileOutputStream.write(decodedBytes);
 			fileOutputStream.close();
-		}catch(FileNotFoundException e) {
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-			
+
 	}
-	
-	public void saveImageFileToDB(String fileName,ImageDto imageData) {
+
+	public void saveImageFileToDB(String fileName, ImageDto imageData) {
 		MyPhoto myphoto = new MyPhoto();
 		myphoto.setPhoto(fileName);
 		myphoto.setUserid(imageData.getId());
