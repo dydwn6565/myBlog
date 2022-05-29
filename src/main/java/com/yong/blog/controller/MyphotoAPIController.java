@@ -16,6 +16,7 @@ import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -87,7 +88,7 @@ public class MyphotoAPIController {
 		Base64.Decoder decoder = Base64.getDecoder();
 
 		byte[] decodedBytes = decoder.decode(fileBase64.split(",")[1]);
-		System.out.println("decodedBytes" + decodedBytes);
+//		System.out.println("decodedBytes" + decodedBytes);
 
 		try {
 			FileOutputStream fileOutputStream;
@@ -106,5 +107,51 @@ public class MyphotoAPIController {
 		myphoto.setUserid(imageData.getId());
 		myphoto.setContent(imageData.getContent());
 		myphotoservice.writeMyphoto(myphoto);
+	}
+	
+	public void modifyImageFileToDB(String fileName, ImageDto imageData) {
+		MyPhoto myphoto = new MyPhoto();
+		myphoto.setId(imageData.getId());
+		myphoto.setPhoto(fileName);
+		myphoto.setUserid(imageData.getId());
+		myphoto.setContent(imageData.getContent());
+		myphotoservice.modifyMyPhoto(myphoto);
+	}
+	
+	@PutMapping("/api/myphoto/modify")
+	public ResponseDto<Integer> modifyMyPhoto(@RequestBody ImageDto imageData) throws Exception {
+		
+		String fileBase64 = imageData.getFileBase64();
+		
+		try {
+			String fileName = imageData.getFileName(); // 파일네임은 서버에서 결정하거나 JSON에서 받아옵니다.
+			// 저장할 파일 경로를 지정합니다.
+
+			File pathsAsFile = new File(FileSystemView.getFileSystemView().getHomeDirectory() + "/app/resources/"
+					+ Integer.toString(imageData.getId()) + "/");
+
+			if (!Files.exists(Paths.get(FileSystemView.getFileSystemView().getHomeDirectory() + "/app/resources/"
+					+ Integer.toString(imageData.getId())))) {
+				pathsAsFile.mkdir();
+				System.out.println("id"+imageData.getId());
+				saveImageToMyPath(fileBase64, imageData);
+				
+				modifyImageFileToDB(fileName,imageData);
+				
+				return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+			} else {
+
+				saveImageToMyPath(fileBase64, imageData);
+				modifyImageFileToDB(fileName,imageData);
+
+				return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+			}
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		return null;
 	}
 }

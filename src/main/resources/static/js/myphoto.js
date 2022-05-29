@@ -40,15 +40,15 @@ function previewFile() {
 let index = {
 	init: function() {
 
-//		const imagess = document.getElementById("myphoto-images").src;
-//
-//		console.log(imagess);
 
 		$("#myphoto-create").on("click", () => {
 
 			this.writeMyphoto();
 
 		});
+		$("#myphoto-modify").on("click", () => {
+			this.modifyMyphoto();
+		})
 	},
 
 	writeMyphoto: function() {
@@ -59,7 +59,7 @@ let index = {
 			content: $("#myphoto-content").val(),
 			fileName: image.name
 		}
-		console.log("fileBase"+data.fileBase64);
+		console.log("fileBase" + data.fileBase64);
 
 		$.ajax({
 			type: "POST",
@@ -69,10 +69,50 @@ let index = {
 			//			dataType:"json"
 		}).done(function(resp) {
 			alert("successfully writed")
-//			location.href = "/myphoto"
+			//			location.href = "/myphoto"
 		}).fail(function(err) {
 			alert(JSON.stringify(err))
 		})
+	},
+
+	modifyMyphoto: function() {
+
+		//		const image = document.getElementById("file").files[0];
+		let imageName;
+		
+		 
+		if(imageName ===null || imageName===undefined){
+			
+			let data={	
+			id:$("#myphoto-file-number").text()
+			}
+			
+			imageName =data.id;
+
+			
+		}else{
+			
+			imageName= document.getElementById("file").files[0].name;
+		}
+		
+				let data={
+					id:$("#myphoto-delete-number").text(),
+					fileBase64: $("#myphoto").attr('src'),
+					content: $("#myphoto-modify-content").val(),
+					fileName: imageName
+				}
+				
+				$.ajax({
+					type:"PUT",
+					url: "/api/myphoto/modify",
+					data:JSON.stringify(data),
+					contentType:"application/json; charset=utf-8",
+				}).done(function(resp){
+					alert("succssfully modified")
+					history.back();
+				}).fail(function(err){
+					alert(JSON.stringify(err));
+				})
 	}
 }
 
